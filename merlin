@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Symfony Console
+ *
+ * @package Studiometa
+ */
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Studiometa\Command\CreateAcfGroup;
+use Symfony\Component\Console\Application;
+
+$app = new Application();
+
+$app->add( new CreateAcfGroup() );
+
+$app->run();
