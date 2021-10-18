@@ -6,7 +6,7 @@
  * @package studiometa/merlin
  */
 
-namespace Studiometa\Command;
+namespace Merlin\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;

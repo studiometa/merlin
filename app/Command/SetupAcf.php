@@ -6,7 +6,7 @@
  * @package studiometa/merlin
  */
 
-namespace Studiometa\Command;
+namespace Merlin\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -91,8 +91,7 @@ class SetupAcf extends Command
         $confirm = $this->io->confirm('Continue with this action ? ', true);
 
         if ($confirm) {
-            $yaml = Yaml::dump($this->config);
-            file_put_contents($this->project_dir . '/config/config.yml', $yaml);
+            file_put_contents($this->project_dir . '/config/config.yml', Yaml::dump($this->config));
             return Command::SUCCESS;
         }
 

@@ -9,8 +9,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Studiometa\Command\CreateAcfGroup;
-use Studiometa\Command\SetupAcf;
+use Merlin\Command\CreateAcfGroup;
+use Merlin\Command\SetupAcf;
 use Symfony\Component\Console\Application;
 
 $app = new Application();
