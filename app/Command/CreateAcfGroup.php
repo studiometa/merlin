@@ -56,6 +56,14 @@ class CreateAcfGroup extends Command
     );
 
     /**
+     * SymfonyStyle
+     *
+     * @var SymfonyStyle
+     */
+    protected $io = null;
+
+
+    /**
      * The prompt data, use to create the field group file class.
      *
      * @var array
@@ -157,7 +165,7 @@ class CreateAcfGroup extends Command
             'required' => $required,
         );
 
-        $add_another = $this->io->confirm('Do you want to add another field ? ', true, '/^(y|j)/i');
+        $add_another = $this->io->confirm('Do you want to add another field ? ', true);
 
         if ($add_another) {
             $this->addField();
@@ -174,7 +182,7 @@ class CreateAcfGroup extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $confirm = $this->io->confirm('Continue with this action ? ', true, '/^(y|j)/i');
+        $confirm = $this->io->confirm('Continue with this action ? ', true);
 
         if ($confirm) {
             // @todo Add creation of the templates here
