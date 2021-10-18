@@ -28,7 +28,11 @@
     "minimum-stability": "dev",
     "scripts": {
         "phpcs": "phpcs -s --colors --extensions=php --standard=./phpcs.xml",
-        "phpstan": "phpstan analyse --memory-limit=512M"
+        "phpstan": "phpstan analyse --memory-limit=512M",
+        "phpunit": "./vendor/bin/phpunit tests"
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
 }
