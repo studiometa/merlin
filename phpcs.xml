@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="merlin">
+    <!-- CLI args -->
+    <arg name="extensions" value="php,stub" />
+    <arg name="colors"/>
+    <arg value="s"/>
+
+    <!-- Define file and folders to lint -->
+    <file>./app</file>
+
+    <!-- Don't check composer dependencies -->
+    <exclude-pattern>/vendor/</exclude-pattern>
+
+    <!-- PSR rules to follow -->
+    <rule ref="PSR12" />
+</ruleset>

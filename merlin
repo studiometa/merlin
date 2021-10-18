@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * Symfony Console
  *
@@ -13,6 +14,6 @@ use Symfony\Component\Console\Application;
 
 $app = new Application();
 
-$app->add( new CreateAcfGroup() );
+$app->add(new CreateAcfGroup());
 
 $app->run();

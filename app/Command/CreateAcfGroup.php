@@ -36,7 +36,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * - Do not handle custom field configuration in the first version
  * - Do not handle multiple locations for field group
  */
-class CreateAcfGroup extends Command {
+class CreateAcfGroup extends Command
+{
 
     /**
      * Command Name
@@ -74,8 +75,9 @@ class CreateAcfGroup extends Command {
      *
      * @return void
      */
-    protected function configure(): void {
-        $this->setDescription( 'Create an ACF field group class' );
+    protected function configure(): void
+    {
+        $this->setDescription('Create an ACF field group class');
     }
 
     /**
@@ -84,20 +86,21 @@ class CreateAcfGroup extends Command {
      * @param InputInterface  $input Input.
      * @param OutputInterface $output Output.
      */
-    protected function interact( InputInterface $input, OutputInterface $output ): void {
-        $this->io = new SymfonyStyle( $input, $output );
+    protected function interact(InputInterface $input, OutputInterface $output): void
+    {
+        $this->io = new SymfonyStyle($input, $output);
 
-        $this->io->title( 'Welcome to the ACF Field Group Generator' );
-        $this->io->note( 'Add usefull tips here' );
+        $this->io->title('Welcome to the ACF Field Group Generator');
+        $this->io->note('Add usefull tips here');
 
-        $this->io->section( '1. Field Group informations' );
+        $this->io->section('1. Field Group informations');
 
         // @todo add a validator to only allow lowercase, trim space, etc
-        $this->data['slug'] = $this->io->ask( 'Enter the name of the field group to create' );
+        $this->data['slug'] = $this->io->ask('Enter the name of the field group to create');
 
         // Field group location location.
-        $this->io->section( '2. Field Group location' );
-        $this->io->note( 'Exemple: post_type == product' );
+        $this->io->section('2. Field Group location');
+        $this->io->note('Exemple: post_type == product');
 
         $this->data['location']['when']  = $this->io->choice(
             'Show this field group if',
@@ -115,31 +118,37 @@ class CreateAcfGroup extends Command {
                 'current_user',
             )
         );
-        $this->data['location']['equal'] = $this->io->choice( $this->data['location']['when'] . ' is equal to/not equal to', array( '==', '!=' ) );
-        $this->data['location']['value'] = $this->io->ask( 'Show this group when ' . $this->data['location']['when'] . ' ' . $this->data['location']['equal'] );
+        $this->data['location']['equal'] = $this->io->choice(
+            $this->data['location']['when'] . ' is equal to/not equal to',
+            array( '==', '!=' )
+        );
+        $this->data['location']['value'] = $this->io->ask('Show this group when ' .
+            $this->data['location']['when'] . ' ' . $this->data['location']['equal']);
 
-        $this->io->newLine( 2 );
+        $this->io->newLine(2);
 
-        $this->io->section( '3. Add fields to the group' );
+        $this->io->section('3. Add fields to the group');
 
         $this->addField();
 
-        $this->io->section( '4. Recap' );
-        $this->io->text( 'Field group name :' . $this->data['slug'] );
-        $this->io->text( 'Field group location :' . $this->data['location']['when'] . ' ' . $this->data['location']['equal'] . ' ' . $this->data['location']['value'] );
-        $this->io->newLine( 1 );
-        $this->io->text( 'Fields' );
-        $this->io->table( array( 'type', 'slug', 'label', 'required' ), $this->data['fields'] );
+        $this->io->section('4. Recap');
+        $this->io->text('Field group name :' . $this->data['slug']);
+        $this->io->text('Field group location :' . $this->data['location']['when'] . ' '
+            . $this->data['location']['equal'] . ' ' . $this->data['location']['value']);
+        $this->io->newLine(1);
+        $this->io->text('Fields');
+        $this->io->table(array( 'type', 'slug', 'label', 'required' ), $this->data['fields']);
     }
 
     /**
      * Add a field
      */
-    public function addField() {
-        $field_type  = $this->io->choice( 'Add a field', $this->field_types );
-        $field_slug  = $this->io->ask( 'Enter the slug of the field' );
-        $field_label = $this->io->ask( 'Enter the label of the field' );
-        $required    = $this->io->confirm( 'Is the field required ', false, '/^(y|j)/i' );
+    public function addField(): void
+    {
+        $field_type  = $this->io->choice('Add a field', $this->field_types);
+        $field_slug  = $this->io->ask('Enter the slug of the field');
+        $field_label = $this->io->ask('Enter the label of the field');
+        $required    = $this->io->choice('Is the field required ', array('no', 'yes'));
 
         $this->data['fields'][] = array(
             'type'     => $field_type,
@@ -148,9 +157,9 @@ class CreateAcfGroup extends Command {
             'required' => $required,
         );
 
-        $add_another = $this->io->confirm( 'Do you want to add another field ? ', true, '/^(y|j)/i' );
+        $add_another = $this->io->confirm('Do you want to add another field ? ', true, '/^(y|j)/i');
 
-        if ( $add_another ) {
+        if ($add_another) {
             $this->addField();
         }
     }
@@ -163,16 +172,17 @@ class CreateAcfGroup extends Command {
      *
      * @return integer
      */
-    protected function execute( InputInterface $input, OutputInterface $output ): int {
-        $confirm = $this->io->confirm( 'Continue with this action ? ', true, '/^(y|j)/i' );
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $confirm = $this->io->confirm('Continue with this action ? ', true, '/^(y|j)/i');
 
-        if ( $confirm ) {
+        if ($confirm) {
             // @todo Add creation of the templates here
-            var_dump( $this->data );
+            var_dump($this->data);
             return Command::SUCCESS;
         }
 
-        $this->io->caution( 'Roger that ! Abort mission !' );
+        $this->io->caution('Roger that ! Abort mission !');
         return Command::FAILURE;
     }
 }

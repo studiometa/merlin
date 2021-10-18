@@ -1,15 +1,30 @@
 {
     "name": "studiometa/merlin",
+    "description": "Studiometa WordPress CLI.",
     "license": "MIT",
+    "keywords": ["console", "cli", "command line", "terminal"],
+    "authors": [
+        {
+            "name": "Studio Meta",
+            "email": "agence@studiometa.fr"
+        }
+    ],
     "require": {
-        "symfony/console": "^5.3"
-    },
-    "config": {
-        "optimize-autoloader": true
+        "symfony/console": "^5.3",
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
         "psr-4": {
             "Studiometa\\": "app"
         }
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "phpcs": "phpcs -s --colors --extensions=php --standard=./phpcs.xml"
+    },
+    "prefer-stable": true
 }
