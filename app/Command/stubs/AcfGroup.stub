@@ -22,7 +22,7 @@ class DummyACFGroup {
      *
      * @return void
      */
-    public function register_dummy_acf_group() {
+    public function register_dummy_slug() {
         $group = new FieldsBuilder( 'dummy_slug' );
 		$group
         addDummyFields
