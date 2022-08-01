@@ -1,10 +1,9 @@
 <?php
 /**
- * Boostrap ACF
- *
- * Create ACF Fields group with stoutlogic/acf-builder package
+ * ACF Field group with stoutlogic/acf-builder package
  *
  * @see https://github.com/stoutlogic/acf-builder
+ * @source https://github.com/studiometa/merlin/ file created with Merlin
  * @package Studiometa
  */
 
@@ -19,7 +18,7 @@ class DummyACFGroup {
     }
 
     /**
-     * Undocumented function
+     * Register dummy_acf_group field group
      *
      * @return void
      */
