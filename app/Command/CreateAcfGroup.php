@@ -12,6 +12,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
+
+use function Symfony\Component\String\u;
 
 /**
  * # Add ACF Fields Group via Symfony Console Command
@@ -187,11 +190,85 @@ class CreateAcfGroup extends Command
         $confirm = $this->io->confirm('Continue with this action ? ', true);
 
         if ($confirm) {
+            $this->prepareFile();
             // @todo Add creation of the templates here, use $this->data
             return Command::SUCCESS;
         }
 
         $this->io->caution('Roger that ! Abort mission !');
         return Command::FAILURE;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function prepareFile()
+    {
+        $file_name = u($this->data['slug'])->title();
+
+        // Load stub
+        $stub = file_get_contents(__DIR__ . '/stubs/AcfGroup.stub');
+
+        // Replace values in the stub
+        $stub = str_replace('DummyACFGroup', $file_name . 'ACFGroup', $stub);
+        $stub = str_replace('dummy_slug', $this->data['slug'], $stub);
+        $stub = str_replace('dummy_location_when', $this->data['location']['when'], $stub);
+        $stub = str_replace('dummy_location_equal', $this->data['location']['equal'], $stub);
+        $stub = str_replace('dummy_location_value', $this->data['location']['value'], $stub);
+
+        $fields_string = '';
+        foreach ($this->data['fields'] as $key => $field) {
+            $fields_string .= $this->createFieldMarkup($field);
+        }
+
+        $stub = str_replace('addDummyFields', $fields_string, $stub);
+
+        // Create file
+        $this->createFile('app/ACFGroups/' . $file_name . '.php', $stub);
+    }
+
+    /**
+     * Create a new file
+     *
+     * @param string $relativePath
+     * @param string $contents
+     * @return void
+     */
+    protected function createFile($relativePath, $contents)
+    {
+        $config = Yaml::parseFile('./config/config.yml');
+
+        $absolutePath = $config['theme'] . '/' . $relativePath;
+        $directory = dirname($absolutePath);
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0754, true);
+        }
+
+        file_put_contents($absolutePath, $contents);
+    }
+
+    /**
+     * create single field markup
+     *
+     * @param array $field
+     * @return string
+     */
+    protected function createFieldMarkup($field)
+    {
+        $type = u($field['type'])->camel()->title();
+        $slug = $field['slug'];
+        $label = $field['label'];
+        $required = $field['required'];
+
+        return "->add$type(
+            '$slug'
+            array(
+                'label' => '$label',
+                'required' => $required,
+            )
+        )";
     }
 }
