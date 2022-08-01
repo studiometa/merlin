@@ -264,9 +264,9 @@ class CreateAcfGroup extends Command
         $required = $field['required'];
 
         return "->add$type(
-            '$slug'
+            '$slug',
             array(
-                'label' => '$label',
+                'label'    => '$label',
                 'required' => $required,
             )
         )";
