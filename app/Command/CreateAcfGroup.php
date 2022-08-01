@@ -72,7 +72,7 @@ class CreateAcfGroup extends Command
         'text',
         'wysiwyg',
         'image',
-        'relation',
+        'relationship',
         'link',
         'page link',
         'gallery',
@@ -158,7 +158,7 @@ class CreateAcfGroup extends Command
         $field_type  = $this->io->choice('Add a field', $this->field_types);
         $field_slug  = $this->io->ask('Enter the slug of the field');
         $field_label = $this->io->ask('Enter the label of the field');
-        $required    = $this->io->choice('Is the field required ', ['no', 'yes']);
+        $required    = $this->io->choice('Is the field required ', ['no' => 0, 'yes' => 1]);
 
         $this->data['fields'][] = [
             'type'     => $field_type,
