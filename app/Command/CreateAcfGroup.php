@@ -261,7 +261,7 @@ class CreateAcfGroup extends Command
         $type = u($field['type'])->camel()->title();
         $slug = $field['slug'];
         $label = $field['label'];
-        $required = $field['required'];
+        $required = $field['required'] === 'no' ? 0 : 1;
 
         return "->add$type(
             '$slug',
