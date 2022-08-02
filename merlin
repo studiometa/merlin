@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Symfony Console
+ *
+ * @package Studiometa
+ */
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Merlin\Command\CreateAcfGroup;
+use Merlin\Command\SetupAcf;
+use Symfony\Component\Console\Application;
+
+$app = new Application();
+
+$app->add(new CreateAcfGroup());
+$app->add(new SetupAcf(__DIR__));
+
+$app->run();

@@ -1,0 +1,32 @@
+<?php
+/**
+ * ACF Field group with stoutlogic/acf-builder package
+ *
+ * @see https://github.com/stoutlogic/acf-builder
+ * @source https://github.com/studiometa/merlin/ file created with Merlin
+ * @package Studiometa
+ */
+
+namespace Studiometa\Managers;
+
+use StoutLogic\AcfBuilder\FieldsBuilder;
+
+class DummyACFGroup {
+
+    public function __construct() {
+        add_action( 'acf/init', array( $this, 'register_dummy_slug' ) );
+    }
+
+    /**
+     * Register dummy_acf_group field group
+     *
+     * @return void
+     */
+    public function register_dummy_slug() {
+        $group = new FieldsBuilder( 'dummy_slug' );
+		$group
+        addDummyFields
+        ->setLocation( 'dummy_location_when', 'dummy_location_equal', 'dummy_location_value' );
+		acf_add_local_field_group( $group->build() );
+    }
+}
